@@ -17,7 +17,7 @@ Vue.use(Toasted, {
 
 Vue.config.productionTip = false
 Vue.use(VeeValidate);
-axios.defaults.baseURL = 'http://192.168.1.38:8000/';
+axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 Vue.prototype.$http = axios;
 
 
