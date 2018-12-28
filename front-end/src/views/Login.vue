@@ -56,8 +56,8 @@ export default {
             password : this.password
           }
           console.log(request);
-          this.$store.commit("login", {name : 'Libin', relam : '123456'});
-          this.$router.push('/home');
+          // this.$store.commit("login", {name : 'Libin', relam : '123456'});
+          // this.$router.push('/home');
       }); 
     }
   },
