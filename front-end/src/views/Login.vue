@@ -13,15 +13,16 @@
                 <div class="card-body">
                   <form class="form">
                     <div class="form-group">
-                      <label for="email">Email</label>
-                      <input type="text" class="form-control form-control-lg rounded-0" name="email" v-model.trim="email" v-validate="'required|email'" :data-vv-as="'email'">
-                      <div class="error" v-show="errors.has('email')">{{errors.first('email')}}</div>
+                      <label for="username">Username</label>
+                      <input type="text" class="form-control form-control-lg rounded-0" name="username" v-model.trim="username" v-validate="'required'" :data-vv-as="'username'">
+                      <div class="error" v-show="errors.has('username')">{{errors.first('username')}}</div>
                     </div>
                     <div class="form-group">
                       <label>Password</label>
                       <input type="password" class="form-control form-control-lg rounded-0" name="password" v-model.trim="password" v-validate="'required'" :data-vv-as="'password'">
                       <div class="error" v-show="errors.has('password')">{{errors.first('password')}}</div>
                     </div>
+                    <div class="error" v-show="generalError !== ''">{{generalError}}</div>
                     <button type="button" class="btn btn-success btn-lg float-right" @click="login">Login</button>
                   </form>
                   <router-link :to="'/register'">New user? Click to register</router-link>
@@ -41,28 +42,33 @@ export default {
   name: 'login',
   data(){
     return {
-      email : '',
-      password : ''
+      username : '',
+      password : '',
+      generalError : ''
     }
   },
   methods : {
     login(){
+      this.generalError = '';
       this.$validator.validateAll().then(success => {
           if (this.errors.any()) {
               return;
           }
           let request = {
-            email :  this.email,
+            name :  this.username,
             password : this.password
           }
-          console.log(request);
-          // this.$store.commit("login", {name : 'Libin', relam : '123456'});
-          // this.$router.push('/home');
+          this.$http.post('usermanagement/login/', request).then(response => {
+            this.$store.commit("login", response.data);
+            this.$router.push('/home');
+          },error => {
+            this.generalError = error.response.data.status;
+          });
       }); 
     }
   },
   created(){
-    console.log(process.env);
+    this.$store.commit("initializeState", {});
   }
 }
 </script>

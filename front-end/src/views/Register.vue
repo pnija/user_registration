@@ -26,6 +26,7 @@
                       <input type="password" v-model.trim="password" v-validate="'required'" :data-vv-as="'password'" class="form-control form-control-lg rounded-0" name="password1">
                       <div  class="error" v-show="errors.has('password1')">{{errors.first('password1')}}</div>
                     </div>
+                    <div  v-show="generalError != ''" class="error">{{generalError}}</div>
                     <button type="button" @click="registerUser" class="btn btn-success btn-lg float-right">Register</button>
                   </form>
                   <router-link :to="'/login'">Already a member? Click to login</router-link>
@@ -48,11 +49,13 @@ export default {
     return  {
       name : '',
       email : '', 
-      password : ''
+      password : '',
+      generalError : ''
     }
   },
   methods : {
     registerUser(){
+      this.generalError = '';
       this.$validator.validateAll().then(success => {
           if (this.errors.any()) {
               return;
@@ -62,11 +65,11 @@ export default {
             name :  this.name,
             password : this.password
           }
-          console.log(request);
           this.$http.post('usermanagement/register/', request).then(response => {
             this.$toasted.success('Registered');
             this.$router.push('/login');
           },error => {
+            this.generalError = error.response.data;
             this.$toasted.error('Failed to register');
           });
       });  

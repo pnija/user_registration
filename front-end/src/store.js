@@ -11,6 +11,12 @@ export default new Vuex.Store({
     login (state, payload) {
       state.loggedInUser = payload;
     },
+    initializeState (state) {
+      state.loggedInUser = {};
+    },
+    updateName (state,payload) {
+      state.loggedInUser.name = payload;
+    },
     logout (state, router) {
       state.loggedInUser = {};
       router.push('/login');

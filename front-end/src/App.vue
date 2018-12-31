@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <button  v-if="Object.keys($store.state.loggedInUser).length > 0" class="float-right" type="button" @click="logout">Logout</button>
+    <div class="top-bar">
+      <router-link :to="'/home'">Home</router-link>
+      <button  v-if="Object.keys($store.state.loggedInUser).length > 0"  type="button" @click="logout">Logout</button>
+    </div>
     <router-view/>
   </div>
 </template>
@@ -16,6 +19,8 @@ export default {
 </script>
 <style>
 .top-bar{
-  background-color: red
+  width: 100%;
+  background-color: #dcd9d9;
+  text-align: end;
 }
 </style>
