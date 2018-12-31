@@ -152,6 +152,3 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-DEFAULT_CREDENTIALS = {'name': 'info@ungleich.ch',
-                       'realm': 'ungleich-admin',
-                       'token': 'PZKBPTHDGSLZBKIZ'}

@@ -32,14 +32,10 @@ from rest_framework import exceptions
 from rest_framework import authentication
 from otpauth.models import OTPSeed
 from otpauth.serializer import TokenSerializer
-from ungleichotpserver.settings import DEFAULT_CREDENTIALS
-exempt_urls = ['/usermanagement/register/',
-                '/usermanagement/login/']
+
 class OTPAuthentication(authentication.BaseAuthentication):
     def authenticate(self, request):
         data = request.data
-        if request.path in exempt_urls:
-            data = DEFAULT_CREDENTIALS
         serializer = TokenSerializer(data=data)
         if serializer.is_valid():
             print("trying to save... {}".format(serializer))
