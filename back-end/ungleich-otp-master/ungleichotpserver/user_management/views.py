@@ -18,6 +18,9 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['post'])
     def register(self, request):
+        '''
+        New user registration
+        '''
         serializer = UserSerializer(data=request.data)
         data = {'username':'user-' + request.data['name'],
                 'name': request.data['name'],
@@ -37,6 +40,9 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['post'])
     def login(self, request):
+        '''
+        Existing user updation
+        '''
         data = request.data
         try:
             Users.objects.get(name=data['name'], password=data['password'])
@@ -47,6 +53,9 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'])
     def user_details(self, request):
+        '''
+        Details of logged in user
+        '''
         header = request.META.get('HTTP_AUTHORIZATION')
         header = json.loads(header)
         name = header.get('name')
@@ -69,6 +78,9 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['post'])
     def update_details(self, request):
+        ''' 
+        Update details of logged in user
+        '''
         data = request.data
         header = request.META.get('HTTP_AUTHORIZATION')
         header = json.loads(header)
